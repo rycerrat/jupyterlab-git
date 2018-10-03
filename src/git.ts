@@ -106,6 +106,14 @@ export interface GitLogResult {
   commits?: [SingleCommitInfo];
 }
 
+/** Interface for GitPush request,
+ * <TODO: */
+
+ export interface GitPush {
+   code: number;
+   pushedCommits?: string;
+ }
+
 /** Makes a HTTP request, sending a git command to the backend */
 function httpGitRequest(
   url: string,
@@ -401,6 +409,23 @@ export class Git {
   async init(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/init', 'POST', {
+        current_path: path
+      });
+      if (response.status !== 200) {
+        return response.json().then((data: any) => {
+          throw new ServerConnection.ResponseError(response, data.message);
+        });
+      }
+      return response;
+    } catch (err) {
+      throw ServerConnection.NetworkError;
+    }
+  }
+
+  /** Make request to push */
+  async push(path: string): Promise<Response> {
+    try {
+      let response = await httpGitRequest('/git/push', 'POST', {
         current_path: path
       });
       if (response.status !== 200) {
