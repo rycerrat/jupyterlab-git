@@ -114,6 +114,10 @@ export interface GitLogResult {
    pushedCommits?: string;
  }
 
+ export interface GitPullRequest {
+   code: number;
+ }
+
 /** Makes a HTTP request, sending a git command to the backend */
 function httpGitRequest(
   url: string,
@@ -443,6 +447,23 @@ export class Git {
   async pull(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/pull', 'POST', {
+        current_path: path
+      });
+      if (response.status !== 200) {
+        return response.json().then((data: any) => {
+          throw new ServerConnection.ResponseError(response, data.message);
+        });
+      }
+      return response;
+    } catch (err) {
+      throw ServerConnection.NetworkError;
+    }
+  }
+
+  /** Make request to pull */
+  async pullRequest(path: string): Promise<Response> {
+    try {
+      let response = await httpGitRequest('/git/pullrequest', 'POST', {
         current_path: path
       });
       if (response.status !== 200) {

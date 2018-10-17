@@ -450,3 +450,12 @@ class Git:
             ["git", "init"], cwd=os.path.join(self.root_dir, current_path)
         )
         return my_output
+
+    def pull_request(self, current_path):
+        """
+        Execute pull request in Code Commit and return the result.
+        """
+        my_output = subprocess.check_output(
+            ["aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master"]
+        )
+        return my_output

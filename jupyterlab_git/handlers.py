@@ -372,6 +372,20 @@ class GitAddAllUntrackedHandler(GitHandler):
         print(my_output)
         self.finish(my_output)
 
+class GitPullRequestHandler(GitHandler):
+    """
+    Handler for git pull_request. Creates a pull request.
+    """
+
+    def post(self):
+        """
+        POST request handler, creates a pull request
+        """
+        data = json.loads(self.request.body.decode("utf-8"))
+        current_path = data["current_path"]
+        my_output = self.git.pull_request(current_path)
+        self.finish(my_output)
+
 
 def setup_handlers(web_app):
     """
@@ -398,6 +412,7 @@ def setup_handlers(web_app):
         ("/git/init", GitInitHandler),
         ("/git/all_history", GitAllHistoryHandler),
         ("/git/add_all_untracked", GitAddAllUntrackedHandler),
+        ("/git/pullrequest,", GitPullRequestHandler)
     ]
 
     # add the baseurl to our paths
