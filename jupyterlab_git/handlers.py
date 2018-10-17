@@ -412,7 +412,7 @@ def setup_handlers(web_app):
         ("/git/init", GitInitHandler),
         ("/git/all_history", GitAllHistoryHandler),
         ("/git/add_all_untracked", GitAddAllUntrackedHandler),
-        ("/git/pullrequest,", GitPullRequestHandler)
+        ("/git/pullrequest", GitPullRequestHandler)
     ]
 
     # add the baseurl to our paths
