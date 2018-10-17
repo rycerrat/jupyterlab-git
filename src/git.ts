@@ -439,7 +439,7 @@ export class Git {
     }
   }
 
-  /** Make request to push */
+  /** Make request to pull */
   async pull(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/pull', 'POST', {
