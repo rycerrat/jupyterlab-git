@@ -461,7 +461,7 @@ class Git:
        # return my_output
 
         p = Popen(
-            ["ls"],
+            ["aws", "codecommit", "create-pull-request", "--title", "'New Pull Request", "--description", "'test1234'", "--targets", "repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master"],
             stdout=PIPE,
             stderr=PIPE,
             cwd=os.path.join(self.root_dir, current_path),
@@ -472,6 +472,6 @@ class Git:
         else:
             return {
                 "code": p.returncode,
-                "command": "ls",
+                "command": "aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master",
                 "message": my_error.decode("utf-8"),
             }
