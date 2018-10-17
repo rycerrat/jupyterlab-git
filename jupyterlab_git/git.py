@@ -455,7 +455,23 @@ class Git:
         """
         Execute pull request in Code Commit and return the result.
         """
-        my_output = subprocess.check_output(
-            ["aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master"]
+       # my_output = subprocess.check_output(
+       #     ["aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master"]
+       # )
+       # return my_output
+
+        p = Popen(
+            ["ls"],
+            stdout=PIPE,
+            stderr=PIPE,
+            cwd=os.path.join(self.root_dir, current_path),
         )
-        return my_output
+        my_output, my_error = p.communicate()
+        if p.returncode == 0:
+            return {"code": p.returncode, "message": my_output.decode("utf-8")}
+        else:
+            return {
+                "code": p.returncode,
+                "command": "ls",
+                "message": my_error.decode("utf-8"),
+            }
