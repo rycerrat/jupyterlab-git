@@ -438,4 +438,21 @@ export class Git {
       throw ServerConnection.NetworkError;
     }
   }
+
+  /** Make request to push */
+  async pull(path: string): Promise<Response> {
+    try {
+      let response = await httpGitRequest('/git/pull', 'POST', {
+        current_path: path
+      });
+      if (response.status !== 200) {
+        return response.json().then((data: any) => {
+          throw new ServerConnection.ResponseError(response, data.message);
+        });
+      }
+      return response;
+    } catch (err) {
+      throw ServerConnection.NetworkError;
+    }
+  }
 }
