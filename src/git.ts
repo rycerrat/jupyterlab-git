@@ -463,7 +463,7 @@ export class Git {
   /** Make request to pull */
   async pullRequest(path: string): Promise<Response> {
     try {
-      let response = await httpGitRequest('/git/pullrequest', 'POST', {
+      let response = await httpGitRequest('/git/pull_request', 'POST', {
         current_path: path
       });
       if (response.status !== 200) {
