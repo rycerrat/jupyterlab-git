@@ -20,7 +20,7 @@ export namespace CommandIDs {
   export const gitInit = 'git:init';
   export const setupRemotes = 'git:tutorial-remotes';
   export const googleLink = 'git:google-link';
-  export const gitPullRequest = 'git:pullRequest'
+  export const gitPullRequest = 'git:pull-request';
 }
 
 /**
