@@ -287,14 +287,16 @@ class Git:
         """
         Execute git add<filename> command & return the result.
         """
-        my_output = subprocess.check_output(["git", "add", filename], cwd=top_repo_path)
+        my_output = subprocess.check_output(
+            ["git", "add", filename], cwd=top_repo_path)
         return my_output
 
     def add_all(self, top_repo_path):
         """
         Execute git add all command & return the result.
         """
-        my_output = subprocess.check_output(["git", "add", "-A"], cwd=top_repo_path)
+        my_output = subprocess.check_output(
+            ["git", "add", "-A"], cwd=top_repo_path)
         return my_output
 
     def add_all_untracked(self, top_repo_path):
@@ -318,21 +320,24 @@ class Git:
         """
         Execute git reset command & return the result.
         """
-        my_output = subprocess.check_output(["git", "reset"], cwd=top_repo_path)
+        my_output = subprocess.check_output(
+            ["git", "reset"], cwd=top_repo_path)
         return my_output
 
     def delete_commit(self, commit_id, top_repo_path):
         """
         Delete a specified commit from the repository.
         """
-        my_output = subprocess.check_output(["git", "revert", "--no-commit", commit_id], cwd=top_repo_path)
+        my_output = subprocess.check_output(
+            ["git", "revert", "--no-commit", commit_id], cwd=top_repo_path)
         return my_output
 
     def reset_to_commit(self, commit_id, top_repo_path):
         """
         Reset the current branch to a specific past commit.
         """
-        my_output = subprocess.check_output(["git", "reset", "--hard", commit_id], cwd=top_repo_path)
+        my_output = subprocess.check_output(
+            ["git", "reset", "--hard", commit_id], cwd=top_repo_path)
         return my_output
 
     def checkout_new_branch(self, branchname, current_path):
@@ -461,7 +466,8 @@ class Git:
        # return my_output
 
         p = Popen(
-            ["aws", "codecommit", "create-pull-request", "--title", "'New Pull Request", "--description", "'test1234'", "--targets", "repositoryName=pmptest,sourceReference=testBranch,destinationReference=master"],
+            ["aws", "codecommit", "create-pull-request", "--title", "'New Pull Request", "--description", "'test1234'",
+                "--targets", "repositoryName=pmpTest,sourceReference=testBranch,destinationReference=master"],
             stdout=PIPE,
             stderr=PIPE,
             cwd=os.path.join(self.root_dir, current_path),
