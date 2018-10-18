@@ -122,7 +122,14 @@ export class BranchHeader extends React.Component<
     this.props.refresh();
     alert('Created Pull request for Master repo');
   };
-
+  pull = async () => {
+    let gitApi = new Git();
+    await gitApi.pull(
+      this.props.currentFileBrowserPath
+    );
+    this.props.refresh();
+    alert('Created Pull request for Master repo');
+  };
   toggleSelect() {
     this.props.refresh();
     if (!this.props.disabled) {
@@ -171,10 +178,10 @@ export class BranchHeader extends React.Component<
           Pull Request
         </button>
         <button
-          onClick={() => this.createPullRequest()}
-          title={'Push to remote'}
+          onClick={() => this.pull()}
+          title={'Pull'}
         >
-          Push to remote
+          Pull
         </button>
         <div className={branchHeaderCenterContent}>
           <h3 className={branchLabelStyle}>{this.props.currentBranch}</h3>
