@@ -128,7 +128,7 @@ export class BranchHeader extends React.Component<
       this.props.currentFileBrowserPath
     );
     this.props.refresh();
-    alert('Created Pull request for Master repo');
+    alert('Pulled From remote repository');
   };
   toggleSelect() {
     this.props.refresh();

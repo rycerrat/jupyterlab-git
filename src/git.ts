@@ -430,7 +430,9 @@ export class Git {
   async push(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/push', 'POST', {
-        current_path: path
+        curr_fb_path: path,
+        origin: 'origin',
+        master: 'master'
       });
       if (response.status !== 200) {
         return response.json().then((data: any) => {
