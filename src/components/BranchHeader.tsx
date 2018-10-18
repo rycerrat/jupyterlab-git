@@ -47,7 +47,7 @@ export interface IBranchHeaderProps {
 export class BranchHeader extends React.Component<
   IBranchHeaderProps,
   IBranchHeaderState
-> {
+  > {
   interval: any;
   constructor(props: IBranchHeaderProps) {
     super(props);
@@ -64,7 +64,8 @@ export class BranchHeader extends React.Component<
       let gitApi = new Git();
       gitApi.commit(message, path).then(response => {
         this.props.refresh();
-      });
+      })
+        .then(resp => gitApi.push(path));
     }
   };
 
@@ -160,9 +161,9 @@ export class BranchHeader extends React.Component<
             className={
               this.props.disabled
                 ? classes(
-                    branchDropdownButtonStyle(this.props.currentTheme),
-                    headerButtonDisabledStyle
-                  )
+                  branchDropdownButtonStyle(this.props.currentTheme),
+                  headerButtonDisabledStyle
+                )
                 : branchDropdownButtonStyle(this.props.currentTheme)
             }
             title={'Change the current branch'}
@@ -173,9 +174,9 @@ export class BranchHeader extends React.Component<
               className={
                 this.props.disabled
                   ? classes(
-                      newBranchButtonStyle(this.props.currentTheme),
-                      headerButtonDisabledStyle
-                    )
+                    newBranchButtonStyle(this.props.currentTheme),
+                    headerButtonDisabledStyle
+                  )
                   : newBranchButtonStyle(this.props.currentTheme)
               }
               title={'Create a new branch'}
