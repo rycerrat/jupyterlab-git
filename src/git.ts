@@ -109,14 +109,14 @@ export interface GitLogResult {
 /** Interface for GitPush request,
  * <TODO: */
 
- export interface GitPush {
-   code: number;
-   pushedCommits?: string;
- }
+export interface GitPush {
+  code: number;
+  pushedCommits?: string;
+}
 
- export interface GitPullRequest {
-   code: number;
- }
+export interface GitPullRequest {
+  code: number;
+}
 
 /** Makes a HTTP request, sending a git command to the backend */
 function httpGitRequest(
@@ -136,7 +136,7 @@ function httpGitRequest(
 
 /** Parent class for all API requests */
 export class Git {
-  constructor() {}
+  constructor() { }
 
   /** Make request for all git info of repository 'path' */
   async allHistory(path: string): Promise<GitAllHistory> {

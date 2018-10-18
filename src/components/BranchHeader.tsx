@@ -165,12 +165,16 @@ export class BranchHeader extends React.Component<
           <span className={openHistorySideBarIconStyle} />
         </button>
         <button
-          className={openHistorySideBarButtonStyle}
           onClick={() => this.createPullRequest()}
-          title={'Show commit history'}
+          title={'Create Pull Request'}
         >
           Pull Request
-          <span className={openHistorySideBarIconStyle} />
+        </button>
+        <button
+          onClick={() => this.createPullRequest()}
+          title={'Push to remote'}
+        >
+          Push to remote
         </button>
         <div className={branchHeaderCenterContent}>
           <h3 className={branchLabelStyle}>{this.props.currentBranch}</h3>
