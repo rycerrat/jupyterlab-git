@@ -404,10 +404,10 @@ class Git:
 
     def pull(self, origin, master, curr_fb_path):
         """
-        Execute git pull <branch1> <branch2> command & return the result.
+        Execute git pull command & return the result.
         """
         p = Popen(
-            ["git", "pull", origin, master, "--no-commit"],
+            ["git", "pull"],
             stdout=PIPE,
             stderr=PIPE,
             cwd=os.path.join(self.root_dir, curr_fb_path),
@@ -418,7 +418,7 @@ class Git:
         else:
             return {
                 "code": p.returncode,
-                "command": "git pull " + origin + " " + master + " --no-commit",
+                "command": "git pull",
                 "message": my_error.decode("utf-8"),
             }
 
