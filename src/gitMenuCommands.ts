@@ -20,6 +20,7 @@ export namespace CommandIDs {
   export const gitInit = 'git:init';
   export const setupRemotes = 'git:tutorial-remotes';
   export const googleLink = 'git:google-link';
+  export const gitPullRequest = 'git:pull-request';
 }
 
 /**
@@ -42,7 +43,7 @@ export function addCommands(app: JupyterLab, services: ServiceManager) {
         fileBrowser = leftSidebarItems.next();
       }
       return (fileBrowser as any).model.path;
-    } catch (err) {}
+    } catch (err) { }
   }
 
   /** Add open terminal command */
@@ -118,7 +119,7 @@ export function addCommands(app: JupyterLab, services: ServiceManager) {
     execute: () => {
       try {
         app.shell.activateById('jp-git-sessions');
-      } catch (err) {}
+      } catch (err) { }
     }
   });
 
@@ -159,4 +160,24 @@ export function addCommands(app: JupyterLab, services: ServiceManager) {
       window.open('https://www.google.com');
     }
   });
+
+
+  /** Add git init command */
+  commands.addCommand(CommandIDs.gitPullRequest, {
+    label: 'Pull Request',
+    caption: ' Create an empty Git repository or reinitialize an existing one',
+    execute: () => {
+      let currentFileBrowserPath = findCurrentFileBrowserPath();
+      showDialog({
+        title: 'Create a pull request to master PMP repo',
+        body: 'Do you really want to make a pull request to this repo?',
+        buttons: [Dialog.cancelButton(), Dialog.warnButton({ label: 'Yes' })]
+      }).then(result => {
+        if (result.button.accept) {
+          gitApi.pullRequest(currentFileBrowserPath);
+        }
+      });
+    }
+  });
+
 }

@@ -47,7 +47,7 @@ export interface IBranchHeaderProps {
 export class BranchHeader extends React.Component<
   IBranchHeaderProps,
   IBranchHeaderState
-> {
+  > {
   interval: any;
   constructor(props: IBranchHeaderProps) {
     super(props);
@@ -64,7 +64,8 @@ export class BranchHeader extends React.Component<
       let gitApi = new Git();
       gitApi.commit(message, path).then(response => {
         this.props.refresh();
-      });
+      })
+        .then(resp => gitApi.push(path));
     }
   };
 
@@ -113,6 +114,22 @@ export class BranchHeader extends React.Component<
     this.props.refresh();
   };
 
+  createPullRequest = async () => {
+    let gitApi = new Git();
+    await gitApi.pullRequest(
+      this.props.currentFileBrowserPath
+    );
+    this.props.refresh();
+    alert('Created Pull request for Master repo');
+  };
+  pull = async () => {
+    let gitApi = new Git();
+    await gitApi.pull(
+      this.props.currentFileBrowserPath
+    );
+    this.props.refresh();
+    alert('Pulled From remote repository');
+  };
   toggleSelect() {
     this.props.refresh();
     if (!this.props.disabled) {
@@ -154,15 +171,27 @@ export class BranchHeader extends React.Component<
           History
           <span className={openHistorySideBarIconStyle} />
         </button>
+        <button
+          onClick={() => this.createPullRequest()}
+          title={'Create Pull Request'}
+        >
+          Pull Request
+        </button>
+        <button
+          onClick={() => this.pull()}
+          title={'Pull'}
+        >
+          Pull
+        </button>
         <div className={branchHeaderCenterContent}>
           <h3 className={branchLabelStyle}>{this.props.currentBranch}</h3>
           <div
             className={
               this.props.disabled
                 ? classes(
-                    branchDropdownButtonStyle(this.props.currentTheme),
-                    headerButtonDisabledStyle
-                  )
+                  branchDropdownButtonStyle(this.props.currentTheme),
+                  headerButtonDisabledStyle
+                )
                 : branchDropdownButtonStyle(this.props.currentTheme)
             }
             title={'Change the current branch'}
@@ -173,9 +202,9 @@ export class BranchHeader extends React.Component<
               className={
                 this.props.disabled
                   ? classes(
-                      newBranchButtonStyle(this.props.currentTheme),
-                      headerButtonDisabledStyle
-                    )
+                    newBranchButtonStyle(this.props.currentTheme),
+                    headerButtonDisabledStyle
+                  )
                   : newBranchButtonStyle(this.props.currentTheme)
               }
               title={'Create a new branch'}
