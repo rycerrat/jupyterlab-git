@@ -494,7 +494,7 @@ class Git:
         git add .
         git commit -m "commiting for test push"
         git push
-        aws codecommit create-pull-request --title 'New Pull Request' --description 'Demo' --targets repositoryName=masterRepo,sourceReference=testBranch,destinationReference=master
+        aws codecommit create-pull-request --title 'New Pull Request' --description 'Demo' --targets repositoryName=pmpTestMaster,sourceReference=testBranch,destinationReference=master
         '''
 
         p = Popen(
