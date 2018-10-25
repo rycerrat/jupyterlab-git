@@ -118,6 +118,10 @@ export interface GitPullRequest {
   code: number;
 }
 
+export interface GitPullRequestToMaster {
+  code: number;
+}
+
 /** Makes a HTTP request, sending a git command to the backend */
 function httpGitRequest(
   url: string,
@@ -426,7 +430,7 @@ export class Git {
     }
   }
 
-  /** Make request to push */
+  /** Make request to push to the master branch */
   async push(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/push', 'POST', {
@@ -445,7 +449,7 @@ export class Git {
     }
   }
 
-  /** Make request to pull */
+  /** Make request to pull from the master branch */
   async pull(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/pull', 'POST', {
@@ -464,10 +468,27 @@ export class Git {
     }
   }
 
-  /** Make request to pull */
+  /** Make request to submit a pull Request */
   async pullRequest(path: string): Promise<Response> {
     try {
       let response = await httpGitRequest('/git/pull_request', 'POST', {
+        current_path: path
+      });
+      if (response.status !== 200) {
+        return response.json().then((data: any) => {
+          throw new ServerConnection.ResponseError(response, data.message);
+        });
+      }
+      return response;
+    } catch (err) {
+      throw ServerConnection.NetworkError;
+    }
+  }
+
+  /** Make request to submit a pull Request */
+  async pullRequestToMaster(path: string): Promise<Response> {
+    try {
+      let response = await httpGitRequest('/git/pull_request_to_master', 'POST', {
         current_path: path
       });
       if (response.status !== 200) {

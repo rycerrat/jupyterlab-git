@@ -120,8 +120,10 @@ export class BranchHeader extends React.Component<
       this.props.currentFileBrowserPath
     );
     this.props.refresh();
-    alert('Created Pull request for Master repo');
+    alert('Created Pull request for User repo');
   };
+
+
   pull = async () => {
     let gitApi = new Git();
     await gitApi.pull(
@@ -130,6 +132,17 @@ export class BranchHeader extends React.Component<
     this.props.refresh();
     alert('Pulled From remote repository');
   };
+
+  createPullRequestToMasterRepo = async () => {
+    let gitAPI = new Git();
+    await gitAPI.pullRequestToMaster(
+      this.props.currentFileBrowserPath
+    );
+    this.props.refresh();
+    alert('Created Pull request for Master Repo')
+  };
+
+
   toggleSelect() {
     this.props.refresh();
     if (!this.props.disabled) {
@@ -173,9 +186,15 @@ export class BranchHeader extends React.Component<
         </button>
         <button
           onClick={() => this.createPullRequest()}
-          title={'Create Pull Request'}
+          title={'Create Pull Request to User Repo'}
         >
-          Pull Request
+          Pull Request to User Repo
+        </button>
+        <button
+          onClick={() => this.createPullRequestToMasterRepo()}
+          title={'Create Pull Request to Master Repo'}
+        >
+          Pull Request to Master Repo
         </button>
         <button
           onClick={() => this.pull()}

@@ -460,11 +460,6 @@ class Git:
         """
         Execute pull request in Code Commit and return the result.
         """
-       # my_output = subprocess.check_output(
-       #     ["aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=ryanTest,sourceReference=testBranch,destinationReference=master"]
-       # )
-       # return my_output
-
         p = Popen(
             ["aws", "codecommit", "create-pull-request", "--title", "'New Pull Request", "--description", "'test1234'",
                 "--targets", "repositoryName=pmpTest,sourceReference=testBranch,destinationReference=master"],
@@ -478,6 +473,41 @@ class Git:
         else:
             return {
                 "code": p.returncode,
-                "command": "aws codecommit create-pull-request --title 'Ryan new Pull Request' --description 'test1234' --targets repositoryName=pmpTest,sourceReference=testBranch,destinationReference=master",
+                "command": "aws codecommit create-pull-request --title 'New Pull Request' --description 'test1234' --targets repositoryName=pmpTest,sourceReference=testBranch,destinationReference=master",
+                "message": my_error.decode("utf-8"),
+            }
+
+    def pull_request_to_master(self, current_path):
+        """
+        Execute pull request to master in Code Commit and return the result.
+        """
+        commands = '''
+        cd /home/ubuntu/jupyter/pmpTestMaster
+        echo "Changed Directory to..."
+        git checkout testBranch
+        echo "Checked Out Branch"
+        git branch --set-upstream-to=origin/testBranch
+        git pull
+        echo "Git Pull Complete"
+        cp -a /home/ubuntu/jupyter/pmpTest/* .
+        echo "Files Copied over."
+        git add .
+        git commit -m "commiting for test push"
+        git push
+        aws codecommit create-pull-request --title 'New Pull Request' --description 'Demo' --targets repositoryName=masterRepo,sourceReference=testBranch,destinationReference=master
+        '''
+
+        p = Popen(
+            '/bin/bash',
+            stdin=PIPE,
+            stdout=PIPE
+        )
+        my_output, my_error = p.communicate(commands.encode('utf-8'))
+        if p.returncode == 0:
+            return {"code": p.returncode, "message": my_output.decode("utf-8")}
+        else:
+            return {
+                "code": p.returncode,
+                "command": "ls",
                 "message": my_error.decode("utf-8"),
             }

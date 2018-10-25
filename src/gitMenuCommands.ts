@@ -162,10 +162,10 @@ export function addCommands(app: JupyterLab, services: ServiceManager) {
   });
 
 
-  /** Add git init command */
+  /** Add git Pull Request command */
   commands.addCommand(CommandIDs.gitPullRequest, {
     label: 'Pull Request',
-    caption: ' Create an empty Git repository or reinitialize an existing one',
+    caption: ' Make a pull request to the PMP repo',
     execute: () => {
       let currentFileBrowserPath = findCurrentFileBrowserPath();
       showDialog({

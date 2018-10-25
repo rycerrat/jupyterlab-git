@@ -386,6 +386,20 @@ class GitPullRequestHandler(GitHandler):
         my_output = self.git.pull_request(current_path)
         self.finish(my_output)
 
+class GitPullRequestToMasterHandler(GitHandler):
+    """
+    Handler for git pull_request_to_master. Creates a pull request to master.
+    """
+
+    def post(self):
+        """
+        POST request handler, creates a pull request to master
+        """
+        data = json.loads(self.request.body.decode("utf-8"))
+        current_path = data["current_path"]
+        my_output = self.git.pull_request_to_master(current_path)
+        self.finish(my_output)
+
 
 def setup_handlers(web_app):
     """
@@ -397,6 +411,7 @@ def setup_handlers(web_app):
         ("/git/show_top_level", GitShowTopLevelHandler),
         ("/git/show_prefix", GitShowPrefixHandler),
         ("/git/pull_request", GitPullRequestHandler),
+        ("/git/pull_request_to_master", GitPullRequestToMasterHandler),
         ("/git/add", GitAddHandler),
         ("/git/status", GitStatusHandler),
         ("/git/branch", GitBranchHandler),
