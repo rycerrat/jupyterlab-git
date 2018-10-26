@@ -113,7 +113,7 @@ export class BranchHeader extends React.Component<
     this.toggleNewBranchBox();
     this.props.refresh();
   };
-
+/*
   createPullRequest = async () => {
     let gitApi = new Git();
     await gitApi.pullRequest(
@@ -121,8 +121,8 @@ export class BranchHeader extends React.Component<
     );
     this.props.refresh();
     alert('Created Pull request for User repo');
-  };
-
+  };  
+*/
 
   pull = async () => {
     let gitApi = new Git();
@@ -184,12 +184,12 @@ export class BranchHeader extends React.Component<
           History
           <span className={openHistorySideBarIconStyle} />
         </button>
-        <button
+  {/*      <button
           onClick={() => this.createPullRequest()}
           title={'Create Pull Request to User Repo'}
         >
           Pull Request to User Repo
-        </button>
+  </button> */}
         <button
           onClick={() => this.createPullRequestToMasterRepo()}
           title={'Create Pull Request to Master Repo'}
